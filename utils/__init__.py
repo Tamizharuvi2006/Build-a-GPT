@@ -2,4 +2,5 @@
 Utilities package.
 """
 
-from .core import set_seed, get_device
+from .seed import set_seed
+from .device import get_device
