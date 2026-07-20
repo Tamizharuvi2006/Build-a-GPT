@@ -32,8 +32,8 @@ venv.bak/
 .DS_Store
 
 # Data and Models
-data/
-*.bin
-*.db
-*.safetensors
-datasets/
+# data/
+# *.bin
+# *.db
+# *.safetensors
+# datasets/
