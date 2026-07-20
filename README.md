@@ -20,12 +20,21 @@ A from-scratch Large Language Model (LLM) designed specifically for story genera
 - `tokenizer/`: BPE tokenizer implementation and tools.
 - `training/`: Training loops and checkpointing.
 
-## Quick Start
-1. **Install Dependencies**: `pip install -r requirements.txt`
-2. **Download Data**: Place your text data in `data/`
-3. **Train Tokenizer**: `python tokenizer/trainer.py`
-4. **Preprocess Data**: Use data preprocessing scripts.
-5. **Train**: `python training/train.py`
+## 🚀 Quick Start
+
+1. **Install dependencies:** `pip install -r requirements.txt`
+2. **Download data:** `python download.py && python export_dataset.py`
+3. **Train tokenizer:** `python tokenizer/trainer.py`
+4. **Preprocess:** `python dataset/preprocess.py`
+5. **Train:** `python train.py`
+
+### 🧪 Test the Demo Checkpoint
+Don't want to wait for training? We've included a partially trained (1/4 complete) demo checkpoint in the repository so you can instantly test the chat interface and prove the architecture works! *(Note: because it was stopped early, it will output gibberish).*
+Read more about it in the [Demo Checkpoint Guide](file:///docs/DEMO_CHECKPOINT.md).
+```bash
+python chat.py --checkpoint checkpoints/best.pt
+```
+
 6. **Generate**: `python generate.py --checkpoint path/to/ckpt --prompt "Once upon a time"`
 
 ## Model Architecture Details
