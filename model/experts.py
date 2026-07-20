@@ -49,6 +49,6 @@ class ExpertLayer(nn.Module):
                 weights = dispatch_weights_flat[token_indices, k_indices].unsqueeze(-1)
                 expert_outputs = expert_outputs * weights
                 
-                out.view(-1, D).index_add_(0, token_indices, expert_outputs)
+                out.view(-1, D).index_add_(0, token_indices, expert_outputs.to(out.dtype))
                 
         return out
