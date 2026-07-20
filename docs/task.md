@@ -1,6 +1,0 @@
-- [x] Update `config/model_config.py` with Planner, Long Context, and Fusion flags.
-- [x] Update `model/attention.py` to use `LongContextExtender`.
-- [x] Update `model/sliding_attention.py` to use `LongContextExtender`.
-- [x] Update `model/llm.py` to instantiate and use `PlannerModule` and `MultiModalFusion`.
-- [x] Update `final_status_report.md` with checked off stretch goals.
-- [x] Update `walkthrough.md` with stretch goals summary.
