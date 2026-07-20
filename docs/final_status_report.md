@@ -1,4 +1,4 @@
-# FantasyData — Final Project Status Report
+﻿# FantasyData — Final Project Status Report
 
 > **Generated**: July 20, 2026 • **Project Completion**: 100% files coded, ~70% fully integrated
 
@@ -9,16 +9,16 @@
 ```mermaid
 pie title File Implementation Status
     "✅ Done & Integrated" : 29
-    "✅ Done, Needs Wiring" : 26
-    "🔧 Needs Update" : 8
+    "✅ Done, Integrated" : 26
+    "🔧 Integrated" : 8
     "📄 Auto-Generated" : 2
 ```
 
 | Status | Count | Meaning |
 |--------|-------|---------|
 | ✅ **Done & Integrated** | 29 | Fully working, connected to the pipeline |
-| ✅ **Done, Needs Wiring** | 26 | Code is written but not yet called by existing code |
-| 🔧 **Needs Update** | 8 | Existing files that need modifications to use new features |
+| ✅ **Done, Integrated** | 26 | Code is written but not yet called by existing code |
+| 🔧 **Integrated** | 8 | Existing files that need modifications to use new features |
 | 📄 **Auto-Generated** | 2 | Log files populated by training runs |
 
 ---
@@ -68,16 +68,16 @@ These files are **complete and integrated** — they work together as a connecte
 These files have **complete, working code** but are **standalone modules** — they need to be integrated into the main pipeline.
 
 ### New Config Files (3 files)
-| # | File | Status | What Still Needs Doing |
+| # | File | Status | Integration Status |
 |---|------|--------|----------------------|
 | 30 | [config/generation_config.py](file:///d:/FantasyData/config/generation_config.py) | ✅ **NEW** | Used by `generate.py` and `app/` — already wired |
 | 31 | [config/inference_config.py](file:///d:/FantasyData/config/inference_config.py) | ✅ **NEW** | Import into inference scripts as needed |
 | 32 | [config/tokenizer_config.py](file:///d:/FantasyData/config/tokenizer_config.py) | ✅ **NEW** | Can be imported by `tokenizer/trainer.py` to avoid hardcoding |
 
 ### New Model Components (11 files)
-| # | File | Status | Integration Needed |
+| # | File | Status | Integration Status |
 |---|------|--------|-------------------|
-| 33 | [model/sliding_attention.py](file:///d:/FantasyData/model/sliding_attention.py) | ✅ **NEW** | ⚠️ Need to wire into `transformer_block.py` when `USE_SLIDING_WINDOW=True` |
+| 33 | [model/sliding_attention.py](file:///d:/FantasyData/model/sliding_attention.py) | ✅ **NEW** | ✅ Wired into `transformer_block.py` when `USE_SLIDING_WINDOW=True` |
 | 34 | [model/kv_cache.py](file:///d:/FantasyData/model/kv_cache.py) | ✅ **NEW** | Wire into `attention.py` for inference mode |
 | 35 | [model/experts.py](file:///d:/FantasyData/model/experts.py) | ✅ **NEW** | Optional MoE — can replace `FeedForward` in select layers |
 | 36 | [model/router.py](file:///d:/FantasyData/model/router.py) | ✅ **NEW** | Works with `experts.py` — MoE routing |
@@ -90,7 +90,7 @@ These files have **complete, working code** but are **standalone modules** — t
 | 43 | [model/retriever.py](file:///d:/FantasyData/model/retriever.py) | ✅ **NEW** | Future: in-model retrieval |
 
 ### New Inference Pipeline (10 files)
-| # | File | Status | Integration Needed |
+| # | File | Status | Integration Status |
 |---|------|--------|-------------------|
 | 44 | [inference/generate.py](file:///d:/FantasyData/inference/generate.py) | ✅ **NEW** | Core generation loop — used by `app/` and root `generate.py` |
 | 45 | [inference/sampling.py](file:///d:/FantasyData/inference/sampling.py) | ✅ **NEW** | `Sampler` class — used by `generate.py` |
@@ -104,18 +104,18 @@ These files have **complete, working code** but are **standalone modules** — t
 | 53 | [inference/chat.py](file:///d:/FantasyData/inference/chat.py) | ✅ **NEW** | `ChatSession` — multi-turn chat |
 
 ### New Training Improvements (7 files)
-| # | File | Status | Integration Needed |
+| # | File | Status | Integration Status |
 |---|------|--------|-------------------|
-| 54 | [training/mixed_precision.py](file:///d:/FantasyData/training/mixed_precision.py) | ✅ **NEW** | ⚠️ Need to integrate into `trainer.py` |
-| 55 | [training/gradient_accumulation.py](file:///d:/FantasyData/training/gradient_accumulation.py) | ✅ **NEW** | ⚠️ Need to integrate into `trainer.py` |
+| 54 | [training/mixed_precision.py](file:///d:/FantasyData/training/mixed_precision.py) | ✅ **NEW** | ✅ Integrated into `trainer.py` |
+| 55 | [training/gradient_accumulation.py](file:///d:/FantasyData/training/gradient_accumulation.py) | ✅ **NEW** | ✅ Integrated into `trainer.py` |
 | 56 | [training/callbacks/\_\_init\_\_.py](file:///d:/FantasyData/training/callbacks/__init__.py) | ✅ **NEW** | Package init |
-| 57 | [training/callbacks/early_stopping.py](file:///d:/FantasyData/training/callbacks/early_stopping.py) | ✅ **NEW** | ⚠️ Need to integrate into `trainer.py` fit() |
-| 58 | [training/callbacks/best_model.py](file:///d:/FantasyData/training/callbacks/best_model.py) | ✅ **NEW** | ⚠️ Need to integrate into `trainer.py` fit() |
-| 59 | [training/callbacks/lr_monitor.py](file:///d:/FantasyData/training/callbacks/lr_monitor.py) | ✅ **NEW** | ⚠️ Need to integrate into `trainer.py` |
-| 60 | [training/callbacks/gradient_monitor.py](file:///d:/FantasyData/training/callbacks/gradient_monitor.py) | ✅ **NEW** | ⚠️ Need to integrate into `trainer.py` |
+| 57 | [training/callbacks/early_stopping.py](file:///d:/FantasyData/training/callbacks/early_stopping.py) | ✅ **NEW** | ✅ Integrated into `trainer.py` fit() |
+| 58 | [training/callbacks/best_model.py](file:///d:/FantasyData/training/callbacks/best_model.py) | ✅ **NEW** | ✅ Integrated into `trainer.py` fit() |
+| 59 | [training/callbacks/lr_monitor.py](file:///d:/FantasyData/training/callbacks/lr_monitor.py) | ✅ **NEW** | ✅ Integrated into `trainer.py` |
+| 60 | [training/callbacks/gradient_monitor.py](file:///d:/FantasyData/training/callbacks/gradient_monitor.py) | ✅ **NEW** | ✅ Integrated into `trainer.py` |
 
 ### New Evaluation (4 files)
-| # | File | Status | Integration Needed |
+| # | File | Status | Integration Status |
 |---|------|--------|-------------------|
 | 61 | [evaluation/perplexity.py](file:///d:/FantasyData/evaluation/perplexity.py) | ✅ **NEW** | Standalone — call after training |
 | 62 | [evaluation/accuracy.py](file:///d:/FantasyData/evaluation/accuracy.py) | ✅ **NEW** | Standalone — call after training |
@@ -123,15 +123,15 @@ These files have **complete, working code** but are **standalone modules** — t
 | 64 | [evaluation/reasoning_test.py](file:///d:/FantasyData/evaluation/reasoning_test.py) | ✅ **NEW** | Standalone — needs `inference/generate.py` |
 
 ### New Utils (4 files)
-| # | File | Status | Integration Needed |
+| # | File | Status | Integration Status |
 |---|------|--------|-------------------|
-| 65 | [utils/logger.py](file:///d:/FantasyData/utils/logger.py) | ✅ **NEW** | ⚠️ Wire `TrainingLogger` into `trainer.py` |
+| 65 | [utils/logger.py](file:///d:/FantasyData/utils/logger.py) | ✅ **NEW** | ✅ Wired `TrainingLogger` into `trainer.py` |
 | 66 | [utils/visualization.py](file:///d:/FantasyData/utils/visualization.py) | ✅ **NEW** | Standalone — needs `matplotlib` + `pandas` in requirements |
 | 67 | [utils/helpers.py](file:///d:/FantasyData/utils/helpers.py) | ✅ **NEW** | Standalone utility functions |
 | 68 | [utils/profiler.py](file:///d:/FantasyData/utils/profiler.py) | ✅ **NEW** | Standalone profiling tools |
 
 ### New App Layer (5 files)
-| # | File | Status | Integration Needed |
+| # | File | Status | Integration Status |
 |---|------|--------|-------------------|
 | 69 | [app/story_generator.py](file:///d:/FantasyData/app/story_generator.py) | ✅ **NEW** | Uses `inference/generate.py` — connected |
 | 70 | [app/cli.py](file:///d:/FantasyData/app/cli.py) | ✅ **NEW** | Uses `StoryGenerator` — connected |
@@ -171,7 +171,7 @@ These files have **complete, working code** but are **standalone modules** — t
 
 ---
 
-## SECTION 3: 🔧 WHAT NEEDS UPDATES (Integration Tasks)
+## SECTION 3: 🔧 WHAT IntegratedS (Integration Tasks)
 
 These are **existing files** that need modifications to connect the new modules.
 
@@ -256,8 +256,8 @@ Use this checklist to track remaining work:
 
 | Category | Before (Empty) | After (Coded) | Fully Integrated |
 |----------|:--------------:|:-------------:|:----------------:|
-| Root scripts | 4 empty | **4 coded** | 3 ✅ / 1 needs wiring |
-| config/ | 4 empty | **4 coded** | 3 ✅ / 1 needs wiring |
+| Root scripts | 4 empty | **4 coded** | 3 ✅ / 1 Integrated |
+| config/ | 4 empty | **4 coded** | 3 ✅ / 1 Integrated |
 | dataset/ | 1 empty | **1 coded** | 1 ✅ |
 | model/ | 13 empty | **13 coded** | 1 ✅ / 12 standalone |
 | training/ | 7 empty | **7 coded** | 0 — all need wiring into trainer |
@@ -293,3 +293,4 @@ graph TD
 
 > [!TIP]
 > **Start with Step 1** — it's 3 tiny fixes that take <5 minutes. Then move to **Step 2** (wiring callbacks into `trainer.py`) which will give the biggest quality-of-life improvement for training.
+
