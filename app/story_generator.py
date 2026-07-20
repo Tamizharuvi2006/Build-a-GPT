@@ -21,7 +21,12 @@ class StoryGenerator:
         
         # Initialize model
         self.model = FantasyLLM()
-        self.model.load_state_dict(torch.load(checkpoint_path, map_location=self.device, weights_only=True))
+        checkpoint = torch.load(checkpoint_path, map_location=self.device, weights_only=True)
+        # If the checkpoint is a dict with 'model_state_dict', extract it
+        if isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
+            self.model.load_state_dict(checkpoint["model_state_dict"])
+        else:
+            self.model.load_state_dict(checkpoint)
         self.model.to(self.device)
         self.model.eval()
         
