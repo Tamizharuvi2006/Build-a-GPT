@@ -6,7 +6,7 @@ import torch
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-BATCH_SIZE = 16
+BATCH_SIZE = 4
 
 
 
@@ -20,8 +20,8 @@ GRAD_CLIP = 1.0
 
 SAVE_EVERY = 1
 
-MAX_TRAIN_BATCHES = 500
-MAX_VAL_BATCHES = 50
+MAX_TRAIN_BATCHES = 100
+MAX_VAL_BATCHES = 10
 EPOCHS = 5
 SEED = 42
 
