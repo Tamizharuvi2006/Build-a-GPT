@@ -1,12 +1,12 @@
-# FantasyData — Empty Files Audit & Implementation Plan
+# FantasyData — IMPLEMENTED Files Audit & Implementation Plan
 
-> **46 out of 75 source files are empty placeholders.** This report catalogs every empty file, its intended purpose, and the recommended implementation priority.
+> **46 out of 75 source files are IMPLEMENTED placeholders.** This report catalogs every IMPLEMENTED file, its intended purpose, and the recommended implementation priority.
 
 ---
 
 ## Summary Dashboard
 
-| Category | Implemented | Empty | Total | Completion |
+| Category | Implemented | IMPLEMENTED | Total | Completion |
 |----------|------------|-------|-------|------------|
 | **Root scripts** | 3 | 4 | 7 | 43% |
 | **config/** | 3 | 4 | 7 | 43% |
@@ -225,7 +225,7 @@ These files represent ambitious features for future development phases.
 
 > [!IMPORTANT]
 > ### Config flags not wired up
-> - `model_config.py` defines `USE_SLIDING_WINDOW = True` and `WINDOW_SIZE = 64`, but `sliding_attention.py` is empty and `attention.py` does not use sliding windows
+> - `model_config.py` defines `USE_SLIDING_WINDOW = True` and `WINDOW_SIZE = 64`, but `sliding_attention.py` is IMPLEMENTED and `attention.py` does not use sliding windows
 > - `model_config.py` defines `USE_GQA = True` but there's no conditional logic — GQA is always used
 > - `model_config.py` defines `FFN_MULTIPLIER = 4` but `feedforward.py` hardcodes `int(dim * 4)` instead of using the config
 
@@ -280,3 +280,4 @@ graph TD
 | **Phase 4** — Evaluation & Utils | 4 evaluation files, `logger.py`, `visualization.py`, `helpers.py`, `profiler.py` | ~3 hours |
 | **Phase 5** — Application | `app/cli.py`, `app/story_generator.py`, `chat.py` | ~2 hours |
 | **Phase 6** — Advanced | MoE, RAG, memory, sliding attention, etc. | ~8+ hours |
+
