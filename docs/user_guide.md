@@ -34,7 +34,53 @@ Once trained, you can interact with your AI!
 
 ---
 
-## 2. Advanced Features & Configuration
+## 2. System Architecture Graph
+
+This diagram shows exactly how data flows through the advanced components of FantasyLLM during a single forward pass:
+
+```mermaid
+graph TD
+    classDef input fill:#2c3e50,stroke:#34495e,stroke-width:2px,color:#ecf0f1
+    classDef memory fill:#8e44ad,stroke:#9b59b6,stroke-width:2px,color:#fff
+    classDef core fill:#2980b9,stroke:#3498db,stroke-width:2px,color:#fff
+    classDef output fill:#27ae60,stroke:#2ecc71,stroke-width:2px,color:#fff
+    
+    A["Raw Text"]:::input --> B["Custom BPE Tokenizer"]:::input
+    B --> C["Token IDs"]:::input
+    C --> D["Token Embedding"]:::core
+    
+    subgraph "Latent Planner (Optional)"
+        D --> P1["Plan Projection"]
+        P1 --> P2["Latent Plan Space"]
+        P2 --> P3["Add Plan back to Embeddings"]
+    end
+    
+    P3 --> E["Multi-Modal Fusion Layer"]:::core
+    
+    subgraph "Hybrid Transformer Stack (N Layers)"
+        E --> F1["RMSNorm"]
+        F1 --> F2["Grouped Query Attention (w/ Sliding Window)"]
+        F2 --> F3["Residual Add"]
+        F3 --> F4["RMSNorm"]
+        F4 --> F5["Top-K Expert Router"]
+        F5 --> F6["Mixture of Experts (4 Experts)"]
+        F6 --> F7["Residual Add"]
+    end
+    
+    F7 --> G1["Memory Retrieval Attention"]:::memory
+    G1 -.-> G2[("Vector Memory Store (Past Context)")]:::memory
+    
+    G1 --> H1["Iterative Reasoning Layer"]:::core
+    H1 -->|Loop 3x| H1
+    
+    H1 --> I["Final RMSNorm"]:::output
+    I --> J["Language Modeling Head"]:::output
+    J --> K["Next Word Logits"]:::output
+```
+
+---
+
+## 3. Advanced Features & Configuration
 
 Your model is equipped with state-of-the-art AI architectural features. You can enable or disable these at any time by editing the flags in **`config/model_config.py`**.
 
