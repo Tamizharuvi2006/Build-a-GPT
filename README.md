@@ -59,5 +59,3 @@ Standard auto-regressive language modeling objective (cross-entropy loss).
 ## Generation Usage
 Use `python chat.py --checkpoint ckpt.pt` for an interactive chat, or `generate.py` for one-shot text generation.
 
-## License
-MIT License
