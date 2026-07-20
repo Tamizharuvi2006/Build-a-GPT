@@ -1,4 +1,4 @@
-# FantasyData — IMPLEMENTED Files Audit & Implementation Plan
+﻿# FantasyData — IMPLEMENTED Files Audit & Implementation Plan
 
 > **46 out of 75 source files are IMPLEMENTED placeholders.** This report catalogs every IMPLEMENTED file, its intended purpose, and the recommended implementation priority.
 
@@ -280,4 +280,5 @@ graph TD
 | **Phase 4** — Evaluation & Utils | 4 evaluation files, `logger.py`, `visualization.py`, `helpers.py`, `profiler.py` | ~3 hours |
 | **Phase 5** — Application | `app/cli.py`, `app/story_generator.py`, `chat.py` | ~2 hours |
 | **Phase 6** — Advanced | MoE, RAG, memory, sliding attention, etc. | ~8+ hours |
+
 

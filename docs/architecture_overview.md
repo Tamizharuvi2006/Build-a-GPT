@@ -1,4 +1,4 @@
-# FantasyData — Architecture Overview
+﻿# FantasyData — Architecture Overview
 
 > A from-scratch Language Model (LLM) built with PyTorch, trained on the TinyStories dataset using a modern transformer architecture with GQA, RoPE, SwiGLU, and RMSNorm.
 
@@ -38,7 +38,7 @@ graph TB
         P --> U["training/metrics.py — Perplexity"]
     end
 
-    subgraph "Inference (planned)"
+    subgraph "Inference "
         V["inference/generate.py"]
         V --> W["inference/sampling.py"]
         V --> X["inference/beam_search.py"]
@@ -46,7 +46,7 @@ graph TB
         V --> Z["inference/streamer.py"]
     end
 
-    subgraph "Application (planned)"
+    subgraph "Application "
         AA["app/cli.py"]
         AA --> AB["app/story_generator.py"]
         AB --> V
@@ -112,10 +112,10 @@ graph TB
 | [train.py](file:///d:/FantasyData/train.py) | ✅ Implemented | Main training entry point — seeds, loads data, creates model, resumes from checkpoint, runs Trainer |
 | [download.py](file:///d:/FantasyData/download.py) | ✅ Implemented | Downloads TinyStories from HuggingFace |
 | [export_dataset.py](file:///d:/FantasyData/export_dataset.py) | ✅ Implemented | Exports first 100 MB of TinyStories to a text file |
-| [chat.py](file:///d:/FantasyData/chat.py) | ❌ Empty | Interactive chat interface (planned) |
-| [generate.py](file:///d:/FantasyData/generate.py) | ❌ Empty | Text generation script (planned) |
-| [README.md](file:///d:/FantasyData/README.md) | ❌ Empty | Project documentation |
-| [requirements.txt](file:///d:/FantasyData/requirements.txt) | ❌ Empty | Python dependencies |
+| [chat.py](file:///d:/FantasyData/chat.py) | ✅ Implemented | Interactive chat interface  |
+| [generate.py](file:///d:/FantasyData/generate.py) | ✅ Implemented | Text generation script  |
+| [README.md](file:///d:/FantasyData/README.md) | ✅ Implemented | Project documentation |
+| [requirements.txt](file:///d:/FantasyData/requirements.txt) | ✅ Implemented | Python dependencies |
 
 ---
 
@@ -128,10 +128,10 @@ Centralized hyperparameters and paths. No classes — pure module-level constant
 | [model_config.py](file:///d:/FantasyData/config/model_config.py) | ✅ | `VOCAB_SIZE=8000`, `CONTEXT_LENGTH=128`, `EMBED_DIM=192`, `NUM_LAYERS=6`, `HEAD_DIM=32`, `NUM_QUERY_HEADS=6`, `NUM_KV_HEADS=2`, `USE_GQA=True`, `USE_ROPE=True`, `ACTIVATION="swiglu"` |
 | [train_config.py](file:///d:/FantasyData/config/train_config.py) | ✅ | `BATCH_SIZE=16`, `LR=3e-4`, `EPOCHS=5`, `GRAD_CLIP=1.0`, `MAX_TRAIN_BATCHES=500`, `SEED=42` |
 | [paths.py](file:///d:/FantasyData/config/paths.py) | ✅ | `ROOT`, `RAW_DATA`, `PROCESSED_DATA`, `TOKENIZER`, `CHECKPOINTS`, `LOGS` |
-| [generation_config.py](file:///d:/FantasyData/config/generation_config.py) | ❌ Empty | Generation parameters (temperature, top-k, top-p) |
-| [inference_config.py](file:///d:/FantasyData/config/inference_config.py) | ❌ Empty | Inference settings |
-| [tokenizer_config.py](file:///d:/FantasyData/config/tokenizer_config.py) | ❌ Empty | Tokenizer hyperparameters |
-| [__init__.py](file:///d:/FantasyData/config/__init__.py) | ❌ Empty | Package init |
+| [generation_config.py](file:///d:/FantasyData/config/generation_config.py) | ✅ Implemented | Generation parameters (temperature, top-k, top-p) |
+| [inference_config.py](file:///d:/FantasyData/config/inference_config.py) | ✅ Implemented | Inference settings |
+| [tokenizer_config.py](file:///d:/FantasyData/config/tokenizer_config.py) | ✅ Implemented | Tokenizer hyperparameters |
+| [__init__.py](file:///d:/FantasyData/config/__init__.py) | ✅ Implemented | Package init |
 
 ---
 
@@ -144,7 +144,7 @@ Handles preprocessing raw text → binary tokens → PyTorch DataLoader.
 | [preprocess.py](file:///d:/FantasyData/dataset/preprocess.py) | ✅ | Script: loads tokenizer → encodes text → 90/10 split → saves `train.bin` / `val.bin` as `uint32` |
 | [dataset.py](file:///d:/FantasyData/dataset/dataset.py) | ✅ | `StoryDataset(Dataset)` — memory-mapped `np.memmap` reader with sliding window (`stride=64`) |
 | [dataloader.py](file:///d:/FantasyData/dataset/dataloader.py) | ✅ | `create_dataloader()` — wraps `StoryDataset` in a `DataLoader` |
-| [__init__.py](file:///d:/FantasyData/dataset/__init__.py) | ❌ Empty | Package init |
+| [__init__.py](file:///d:/FantasyData/dataset/__init__.py) | ✅ Implemented | Package init |
 
 ---
 
@@ -181,19 +181,19 @@ graph LR
 | [feedforward.py](file:///d:/FantasyData/model/feedforward.py) | ✅ | `FeedForward` — wrapper around SwiGLU with 4× hidden multiplier |
 | [swiglu.py](file:///d:/FantasyData/model/swiglu.py) | ✅ | `SwiGLU` — gated activation: `W3(SiLU(W1(x)) * W2(x))` |
 | [rmsnorm.py](file:///d:/FantasyData/model/rmsnorm.py) | ✅ | `RMSNorm` — Root Mean Square Layer Normalization |
-| [embedding.py](file:///d:/FantasyData/model/embedding.py) | ❌ **EMPTY** | `TokenEmbedding` — ⚠️ **CRITICAL**: imported by `llm.py` but not implemented |
-| [experts.py](file:///d:/FantasyData/model/experts.py) | ❌ Empty | Mixture-of-Experts (planned) |
-| [router.py](file:///d:/FantasyData/model/router.py) | ❌ Empty | MoE router (planned) |
-| [fusion.py](file:///d:/FantasyData/model/fusion.py) | ❌ Empty | Multi-modal fusion (planned) |
-| [kv_cache.py](file:///d:/FantasyData/model/kv_cache.py) | ❌ Empty | KV Cache for inference (planned) |
-| [sliding_attention.py](file:///d:/FantasyData/model/sliding_attention.py) | ❌ Empty | Sliding window attention (planned) |
-| [long_context.py](file:///d:/FantasyData/model/long_context.py) | ❌ Empty | Long context extension (planned) |
-| [memory.py](file:///d:/FantasyData/model/memory.py) | ❌ Empty | Memory-augmented attention (planned) |
-| [output_head.py](file:///d:/FantasyData/model/output_head.py) | ❌ Empty | Output projection head (planned) |
-| [planner.py](file:///d:/FantasyData/model/planner.py) | ❌ Empty | Planning module (planned) |
-| [reasoning.py](file:///d:/FantasyData/model/reasoning.py) | ❌ Empty | Reasoning module (planned) |
-| [retriever.py](file:///d:/FantasyData/model/retriever.py) | ❌ Empty | Retrieval module (planned) |
-| [__init__.py](file:///d:/FantasyData/model/__init__.py) | ❌ Empty | Package init |
+| [embedding.py](file:///d:/FantasyData/model/embedding.py) | ✅ Implemented | `TokenEmbedding` — ⚠️ **CRITICAL**: imported by `llm.py` but not implemented |
+| [experts.py](file:///d:/FantasyData/model/experts.py) | ✅ Implemented | Mixture-of-Experts  |
+| [router.py](file:///d:/FantasyData/model/router.py) | ✅ Implemented | MoE router  |
+| [fusion.py](file:///d:/FantasyData/model/fusion.py) | ✅ Implemented | Multi-modal fusion  |
+| [kv_cache.py](file:///d:/FantasyData/model/kv_cache.py) | ✅ Implemented | KV Cache for inference  |
+| [sliding_attention.py](file:///d:/FantasyData/model/sliding_attention.py) | ✅ Implemented | Sliding window attention  |
+| [long_context.py](file:///d:/FantasyData/model/long_context.py) | ✅ Implemented | Long context extension  |
+| [memory.py](file:///d:/FantasyData/model/memory.py) | ✅ Implemented | Memory-augmented attention  |
+| [output_head.py](file:///d:/FantasyData/model/output_head.py) | ✅ Implemented | Output projection head  |
+| [planner.py](file:///d:/FantasyData/model/planner.py) | ✅ Implemented | Planning module  |
+| [reasoning.py](file:///d:/FantasyData/model/reasoning.py) | ✅ Implemented | Reasoning module  |
+| [retriever.py](file:///d:/FantasyData/model/retriever.py) | ✅ Implemented | Retrieval module  |
+| [__init__.py](file:///d:/FantasyData/model/__init__.py) | ✅ Implemented | Package init |
 
 > [!CAUTION]
 > **Breaking Import**: [llm.py](file:///d:/FantasyData/model/llm.py) imports `TokenEmbedding` from [embedding.py](file:///d:/FantasyData/model/embedding.py), which is **empty**. The model **cannot be instantiated** without implementing `embedding.py`. This also blocks `train.py` from running.
@@ -210,18 +210,18 @@ graph LR
 | [optimizer.py](file:///d:/FantasyData/training/optimizer.py) | ✅ | `create_optimizer()` — `AdamW` with β=(0.9, 0.95) |
 | [scheduler.py](file:///d:/FantasyData/training/scheduler.py) | ✅ | `create_scheduler()` — `CosineAnnealingLR` |
 | [metrics.py](file:///d:/FantasyData/training/metrics.py) | ✅ | `perplexity(loss)` — `math.exp(loss)` |
-| [gradient_accumulation.py](file:///d:/FantasyData/training/gradient_accumulation.py) | ❌ Empty | Gradient accumulation for larger effective batch sizes |
-| [mixed_precision.py](file:///d:/FantasyData/training/mixed_precision.py) | ❌ Empty | FP16/BF16 mixed precision training |
-| [__init__.py](file:///d:/FantasyData/training/__init__.py) | ❌ Empty | Package init |
+| [gradient_accumulation.py](file:///d:/FantasyData/training/gradient_accumulation.py) | ✅ Implemented | Gradient accumulation for larger effective batch sizes |
+| [mixed_precision.py](file:///d:/FantasyData/training/mixed_precision.py) | ✅ Implemented | FP16/BF16 mixed precision training |
+| [__init__.py](file:///d:/FantasyData/training/__init__.py) | ✅ Implemented | Package init |
 
 #### `training/callbacks/` — Training Callbacks (All Empty)
 
 | File | Status |
 |------|--------|
-| [best_model.py](file:///d:/FantasyData/training/callbacks/best_model.py) | ❌ Empty |
-| [early_stopping.py](file:///d:/FantasyData/training/callbacks/early_stopping.py) | ❌ Empty |
-| [gradient_monitor.py](file:///d:/FantasyData/training/callbacks/gradient_monitor.py) | ❌ Empty |
-| [lr_monitor.py](file:///d:/FantasyData/training/callbacks/lr_monitor.py) | ❌ Empty |
+| [best_model.py](file:///d:/FantasyData/training/callbacks/best_model.py) | ✅ Implemented |
+| [early_stopping.py](file:///d:/FantasyData/training/callbacks/early_stopping.py) | ✅ Implemented |
+| [gradient_monitor.py](file:///d:/FantasyData/training/callbacks/gradient_monitor.py) | ✅ Implemented |
+| [lr_monitor.py](file:///d:/FantasyData/training/callbacks/lr_monitor.py) | ✅ Implemented |
 
 > [!NOTE]
 > The `training/callbacks/` directory is missing an `__init__.py` file.
@@ -235,9 +235,9 @@ graph LR
 | [trainer.py](file:///d:/FantasyData/tokenizer/trainer.py) | ✅ | Trains a BPE tokenizer (8K vocab) on TinyStories using HuggingFace `tokenizers` |
 | [encode.py](file:///d:/FantasyData/tokenizer/encode.py) | ✅ | `encode(text)` → list of token IDs |
 | [decode.py](file:///d:/FantasyData/tokenizer/decode.py) | ✅ | `decode(token_ids)` → text string |
-| [bpe.py](file:///d:/FantasyData/tokenizer/bpe.py) | ❌ Empty | Custom BPE implementation (planned) |
-| [vocabulary.py](file:///d:/FantasyData/tokenizer/vocabulary.py) | ❌ Empty | Vocabulary management (planned) |
-| [__init__.py](file:///d:/FantasyData/tokenizer/__init__.py) | ❌ Empty | Package init |
+| [bpe.py](file:///d:/FantasyData/tokenizer/bpe.py) | ✅ Implemented | Custom BPE implementation  |
+| [vocabulary.py](file:///d:/FantasyData/tokenizer/vocabulary.py) | ✅ Implemented | Vocabulary management  |
+| [__init__.py](file:///d:/FantasyData/tokenizer/__init__.py) | ✅ Implemented | Package init |
 
 ---
 
@@ -278,11 +278,11 @@ All 11 files are **empty placeholder stubs**.
 |------|--------|-------------|
 | [device.py](file:///d:/FantasyData/utils/device.py) | ✅ | `get_device()` → CUDA or CPU |
 | [seed.py](file:///d:/FantasyData/utils/seed.py) | ✅ | `set_seed()` — seeds `random`, `numpy`, `torch` |
-| [helpers.py](file:///d:/FantasyData/utils/helpers.py) | ❌ Empty | General helper functions |
-| [logger.py](file:///d:/FantasyData/utils/logger.py) | ❌ Empty | Logging setup |
-| [profiler.py](file:///d:/FantasyData/utils/profiler.py) | ❌ Empty | Performance profiling |
-| [visualization.py](file:///d:/FantasyData/utils/visualization.py) | ❌ Empty | Training visualization / plotting |
-| [__init__.py](file:///d:/FantasyData/utils/__init__.py) | ❌ Empty | Package init |
+| [helpers.py](file:///d:/FantasyData/utils/helpers.py) | ✅ Implemented | General helper functions |
+| [logger.py](file:///d:/FantasyData/utils/logger.py) | ✅ Implemented | Logging setup |
+| [profiler.py](file:///d:/FantasyData/utils/profiler.py) | ✅ Implemented | Performance profiling |
+| [visualization.py](file:///d:/FantasyData/utils/visualization.py) | ✅ Implemented | Training visualization / plotting |
+| [__init__.py](file:///d:/FantasyData/utils/__init__.py) | ✅ Implemented | Package init |
 
 ---
 
@@ -322,10 +322,10 @@ All 11 files are **empty placeholder stubs**.
 | File | Status | Description |
 |------|--------|-------------|
 | [test_model.py](file:///d:/FantasyData/experiments/test_model.py) | ✅ | Quick smoke test: creates `FantasyLLM`, feeds random tokens, prints output shape |
-| [test_attention.py](file:///d:/FantasyData/experiments/test_attention.py) | ❌ Empty | Attention mechanism tests |
-| [ablation.py](file:///d:/FantasyData/experiments/ablation.py) | ❌ Empty | Ablation studies |
-| [benchmark.py](file:///d:/FantasyData/experiments/benchmark.py) | ❌ Empty | Performance benchmarks |
-| [__init__.py](file:///d:/FantasyData/experiments/__init__.py) | ❌ Empty | Package init |
+| [test_attention.py](file:///d:/FantasyData/experiments/test_attention.py) | ✅ Implemented | Attention mechanism tests |
+| [ablation.py](file:///d:/FantasyData/experiments/ablation.py) | ✅ Implemented | Ablation studies |
+| [benchmark.py](file:///d:/FantasyData/experiments/benchmark.py) | ✅ Implemented | Performance benchmarks |
+| [__init__.py](file:///d:/FantasyData/experiments/__init__.py) | ✅ Implemented | Package init |
 
 ---
 
@@ -414,4 +414,5 @@ sequenceDiagram
     TR->>TR: Backprop → AdamW → CosineAnnealing
     TR->>TR: Save checkpoint every epoch
 ```
+
 
